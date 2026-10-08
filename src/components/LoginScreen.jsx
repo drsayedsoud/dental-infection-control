@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ShieldAlert, LogIn, AlertCircle } from 'lucide-react';
+import { LogIn, AlertCircle } from 'lucide-react';
 import { auth, provider, signInWithPopup, db, doc, setDoc, serverTimestamp } from '../firebase';
+
+const ToothIcon = ({ size = 24, className = "" }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <path d="M10 21c-1 0-2.5-1.5-3-3-.5-1.5-.5-2.5-1-4-.5-1.5-3-2-3-5 0-3.3 2.7-6 6-6 1.8 0 3.3.9 4 2.2.7-1.3 2.2-2.2 4-2.2 3.3 0 6 2.7 6 6 0 3-2.5 3.5-3 5-.5 1.5-.5 2.5-1 4-.5 1.5-2 3-3 3-2 0-3-2-4-2-1 0-2 2-4 2z"/>
+    <path d="M12 11v10"/>
+  </svg>
+);
 
 export default function LoginScreen({ onLoginSuccess }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -50,12 +57,12 @@ export default function LoginScreen({ onLoginSuccess }) {
         className="bg-white dark:bg-slate-800 rounded-3xl shadow-2xl p-8 max-w-md w-full text-center border border-slate-100 dark:border-slate-700 relative overflow-hidden"
       >
         <div className="absolute top-0 right-0 -mr-10 -mt-10 opacity-5 text-teal-600">
-          <ShieldAlert size={200} />
+          <ToothIcon size={200} />
         </div>
 
         <div className="relative z-10">
           <div className="w-20 h-20 bg-teal-100 dark:bg-teal-900/50 rounded-full flex items-center justify-center mx-auto mb-6 text-teal-600 dark:text-teal-400">
-            <ShieldAlert size={40} />
+            <ToothIcon size={40} />
           </div>
           
           <h1 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">مكافحة العدوى - أسنان</h1>
