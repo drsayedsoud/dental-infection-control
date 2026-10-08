@@ -8,7 +8,7 @@ import ChlorineCalculator from './components/ChlorineCalculator';
 import AdminDashboard from './components/AdminDashboard';
 import { topics } from './data';
 import { 
-  ShieldCheck, Activity, Moon, Sun, 
+  ShieldCheck, ShieldAlert, Activity, Moon, Sun, 
   Search, Trophy, HeartPulse, ListChecks,
   Droplets, Syringe, Sparkles, X, LogOut, Calculator, Settings,
   BookOpen, FlaskConical, AlertCircle, Share2, MessageCircle
