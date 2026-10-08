@@ -39,6 +39,30 @@ function App() {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [showStatsModal, setShowStatsModal] = useState(false);
   const [showAdmin, setShowAdmin] = useState(false);
+  
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [showInstallBanner, setShowInstallBanner] = useState(false);
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      setShowInstallBanner(true);
+    };
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        setShowInstallBanner(false);
+      }
+      setDeferredPrompt(null);
+    }
+  };
 
   const searchRef = useRef(null);
   const pressTimer = useRef(null);
@@ -254,6 +278,42 @@ function App() {
       {/* Main Content */}
       <main className="container mx-auto max-w-4xl px-4 py-6 -mt-4 relative z-20">
         
+        {/* Install Banner */}
+        <AnimatePresence>
+          {showInstallBanner && (
+            <motion.div 
+              initial={{ opacity: 0, y: -10 }} 
+              animate={{ opacity: 1, y: 0 }} 
+              exit={{ opacity: 0, y: -10 }}
+              className="bg-indigo-50 dark:bg-indigo-900/30 border-2 border-indigo-200 dark:border-indigo-800 rounded-xl p-4 mb-6 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm"
+            >
+              <div className="flex items-center gap-3">
+                <div className="bg-indigo-100 dark:bg-indigo-800 p-2 rounded-full text-indigo-600 dark:text-indigo-300">
+                  <ShieldAlert size={24} />
+                </div>
+                <div>
+                  <h3 className="font-bold text-slate-800 dark:text-white">تثبيت التطبيق</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">قم بتثبيت التطبيق على جهازك للوصول السريع حتى بدون إنترنت!</p>
+                </div>
+              </div>
+              <div className="flex gap-2 w-full sm:w-auto">
+                <button 
+                  onClick={handleInstallClick}
+                  className="flex-1 sm:flex-none bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg transition-colors"
+                >
+                  تثبيت
+                </button>
+                <button 
+                  onClick={() => setShowInstallBanner(false)}
+                  className="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {/* Quick Actions */}
         <div className="grid grid-cols-4 gap-2 mb-6">
           <button onClick={() => setShowFlashcards(true)} className="flex flex-col items-center justify-center p-3 rounded-xl bg-white dark:bg-slate-800 shadow-md border border-slate-100 dark:border-slate-700 hover:border-teal-500 dark:hover:border-teal-500 transition-all">
