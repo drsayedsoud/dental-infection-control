@@ -3,13 +3,16 @@ import TopicCard from './components/TopicCard';
 import FlashcardsMode from './components/FlashcardsMode';
 import DailyChecklist from './components/DailyChecklist';
 import PepEmergencyModal from './components/PepEmergencyModal';
+import LoginScreen from './components/LoginScreen';
 import { topics } from './data';
 import { 
   ShieldAlert, Activity, Moon, Sun, 
   Search, Trophy, HeartPulse, CheckSquare,
-  Droplets, Syringe, Sparkles, X
+  Droplets, Syringe, Sparkles, X, LogOut
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { auth, signOut } from './firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -25,10 +28,29 @@ function App() {
   const [showChecklist, setShowChecklist] = useState(false);
   const [showPepModal, setShowPepModal] = useState(false);
   
+  const [user, setUser] = useState(null);
+  const [authLoading, setAuthLoading] = useState(true);
+
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearch, setShowSearch] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [showStatsModal, setShowStatsModal] = useState(false);
+
+  const searchRef = useRef(null);
+
+  useEffect(() => {
+    try {
+      const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+        setUser(currentUser);
+        setAuthLoading(false);
+      });
+      return () => unsubscribe();
+    } catch (e) {
+      // If firebase is not configured yet
+      setAuthLoading(false);
+      console.warn("Firebase is not configured yet. App will work without login for now.");
+    }
+  }, []);
 
   const [quizResults, setQuizResults] = useState(() => {
     try {
@@ -112,7 +134,22 @@ function App() {
   const totalQuestions = topics.length;
   const answeredCount = Object.keys(quizResults).length;
   const correctCount = Object.values(quizResults).filter(r => r.isCorrect).length;
-  const progressPercent = totalQuestions > 0 ? Math.round((answeredCount / totalQuestions) * 100) : 0;
+  const handleLogout = () => {
+    signOut(auth).catch(console.error);
+  };
+
+  if (authLoading) {
+    return (
+      <div className={`min-h-screen flex items-center justify-center ${isDarkMode ? 'bg-slate-900 text-white' : 'bg-slate-50 text-slate-900'}`}>
+        <div className="w-8 h-8 border-4 border-teal-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  // إذا لم يقم بتسجيل الدخول (وكان الفايربيز مهيئاً) نعرض شاشة الدخول
+  if (!user && auth && auth.app.options.apiKey !== "YOUR_API_KEY") {
+    return <LoginScreen onLoginSuccess={setUser} />;
+  }
 
   return (
     <div className={`min-h-screen font-['Tajawal'] pb-24 md:pb-12 transition-colors duration-300 ${isDarkMode ? 'bg-slate-900 text-white' : 'bg-slate-50 text-slate-900'}`}>
@@ -143,6 +180,11 @@ function App() {
             </button>
             
             <div className="flex items-center gap-2">
+              {user && (
+                <button onClick={handleLogout} className="p-2.5 rounded-full bg-white/10 hover:bg-white/20 transition-all text-rose-200 hover:text-rose-100" title="تسجيل الخروج">
+                  <LogOut size={20} />
+                </button>
+              )}
               <button onClick={() => setShowStatsModal(true)} className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-white/10 hover:bg-white/20 text-sm font-medium">
                 <Trophy size={16} />
                 <span>{correctCount}/{totalQuestions}</span>
