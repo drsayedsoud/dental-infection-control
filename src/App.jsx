@@ -79,8 +79,6 @@ function App() {
     } catch { return {}; }
   });
 
-  const searchRef = useRef(null);
-
   useEffect(() => {
     localStorage.setItem('dentalQuizResults', JSON.stringify(quizResults));
   }, [quizResults]);
