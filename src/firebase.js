@@ -4,13 +4,12 @@ import { getFirestore, doc, setDoc, serverTimestamp, collection, getDocs, query,
 import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCuV0v9iA0Bq9qBrWf1o5htcT6AhBcn5Bk",
-  authDomain: "azkary-af90d.firebaseapp.com",
-  projectId: "azkary-af90d",
-  storageBucket: "azkary-af90d.firebasestorage.app",
-  messagingSenderId: "354511541190",
-  appId: "1:354511541190:web:d991b5ed72204854dfd8c7",
-  measurementId: "G-ES18X7F15R"
+  apiKey: "AIzaSyD80n8ZvwJnVW2xLM8eXel9O9QgMCUE8Lw",
+  authDomain: "infection-eae90.firebaseapp.com",
+  projectId: "infection-eae90",
+  storageBucket: "infection-eae90.firebasestorage.app",
+  messagingSenderId: "1084633853555",
+  appId: "1:1084633853555:web:0f421fdb474c5b84164406"
 };
 
 // تهيئة فايربيز
