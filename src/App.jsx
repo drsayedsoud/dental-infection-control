@@ -5,11 +5,12 @@ import DailyChecklist from './components/DailyChecklist';
 import PepEmergencyModal from './components/PepEmergencyModal';
 import LoginScreen from './components/LoginScreen';
 import ChlorineCalculator from './components/ChlorineCalculator';
+import AdminDashboard from './components/AdminDashboard';
 import { topics } from './data';
 import { 
   ShieldAlert, Activity, Moon, Sun, 
   Search, Trophy, HeartPulse, CheckSquare,
-  Droplets, Syringe, Sparkles, X, LogOut, Calculator
+  Droplets, Syringe, Sparkles, X, LogOut, Calculator, Settings
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { auth, signOut } from './firebase';
@@ -37,8 +38,25 @@ function App() {
   const [showSearch, setShowSearch] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [showStatsModal, setShowStatsModal] = useState(false);
+  const [showAdmin, setShowAdmin] = useState(false);
 
   const searchRef = useRef(null);
+  const pressTimer = useRef(null);
+
+  const handleAdminPressStart = () => {
+    pressTimer.current = setTimeout(() => {
+      const pass = window.prompt("أدخل كلمة مرور المسؤول:");
+      if (pass === "1153") {
+        setShowAdmin(true);
+      } else if (pass !== null) {
+        alert("كلمة المرور غير صحيحة");
+      }
+    }, 3000);
+  };
+
+  const handleAdminPressEnd = () => {
+    if (pressTimer.current) clearTimeout(pressTimer.current);
+  };
 
   useEffect(() => {
     try {
@@ -174,12 +192,26 @@ function App() {
         
         <div className="container mx-auto max-w-4xl relative z-10">
           <div className="flex justify-between items-center mb-5">
-            <button 
-              onClick={() => { setShowSearch(!showSearch); if (!showSearch) setTimeout(() => searchRef.current?.focus(), 200); }}
-              className="p-2.5 rounded-full bg-white/10 hover:bg-white/20 transition-all"
-            >
-              <Search size={20} />
-            </button>
+            <div className="flex items-center gap-2">
+              <button 
+                onClick={() => { setShowSearch(!showSearch); if (!showSearch) setTimeout(() => searchRef.current?.focus(), 200); }}
+                className="p-2.5 rounded-full bg-white/10 hover:bg-white/20 transition-all"
+              >
+                <Search size={20} />
+              </button>
+              
+              <button
+                onMouseDown={handleAdminPressStart}
+                onMouseUp={handleAdminPressEnd}
+                onMouseLeave={handleAdminPressEnd}
+                onTouchStart={handleAdminPressStart}
+                onTouchEnd={handleAdminPressEnd}
+                className="p-2.5 rounded-full bg-white/10 hover:bg-white/20 transition-all text-white/60 hover:text-white"
+                title="إعدادات (اضغط مطولاً)"
+              >
+                <Settings size={20} />
+              </button>
+            </div>
             
             <div className="flex items-center gap-2">
               {user && (
@@ -296,6 +328,7 @@ function App() {
         {showChecklist && <DailyChecklist onClose={() => setShowChecklist(false)} />}
         {showCalculator && <ChlorineCalculator onClose={() => setShowCalculator(false)} />}
         {showPepModal && <PepEmergencyModal onClose={() => setShowPepModal(false)} />}
+        {showAdmin && <AdminDashboard onClose={() => setShowAdmin(false)} />}
       </AnimatePresence>
 
     </div>
