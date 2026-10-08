@@ -8,9 +8,10 @@ import ChlorineCalculator from './components/ChlorineCalculator';
 import AdminDashboard from './components/AdminDashboard';
 import { topics } from './data';
 import { 
-  ShieldAlert, Activity, Moon, Sun, 
-  Search, Trophy, HeartPulse, CheckSquare,
-  Droplets, Syringe, Sparkles, X, LogOut, Calculator, Settings
+  ShieldCheck, Activity, Moon, Sun, 
+  Search, Trophy, HeartPulse, ListChecks,
+  Droplets, Syringe, Sparkles, X, LogOut, Calculator, Settings,
+  BookOpen, FlaskConical, AlertCircle
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { auth, signOut } from './firebase';
@@ -211,7 +212,7 @@ function App() {
       {/* Header */}
       <header className="bg-teal-700 dark:bg-slate-800 text-white pt-5 pb-8 px-4 shadow-xl relative overflow-hidden transition-colors duration-300">
         <div className="absolute top-0 right-0 -mr-16 -mt-16 opacity-10">
-          <ShieldAlert size={280} />
+          <ShieldCheck size={280} />
         </div>
         
         <div className="container mx-auto max-w-4xl relative z-10">
@@ -255,7 +256,7 @@ function App() {
 
           <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-2">
             <div className="flex items-center justify-center gap-3 mb-2">
-              <ShieldAlert size={28} className="text-teal-300" />
+              <ShieldCheck size={28} className="text-teal-300" />
               <h1 className="text-2xl md:text-3xl font-extrabold drop-shadow-md">
                 مكافحة العدوى بطب الأسنان
               </h1>
@@ -317,22 +318,22 @@ function App() {
         {/* Quick Actions */}
         <div className="grid grid-cols-4 gap-2 mb-6">
           <button onClick={() => setShowFlashcards(true)} className="flex flex-col items-center justify-center p-3 rounded-xl bg-white dark:bg-slate-800 shadow-md border border-slate-100 dark:border-slate-700 hover:border-teal-500 dark:hover:border-teal-500 transition-all">
-            <Sparkles className="text-amber-500 mb-2" size={24} />
+            <BookOpen className="text-amber-500 mb-2" size={24} />
             <span className="text-[11px] font-bold text-slate-700 dark:text-slate-200">فلاش كارد</span>
           </button>
           
           <button onClick={() => setShowChecklist(true)} className="flex flex-col items-center justify-center p-3 rounded-xl bg-white dark:bg-slate-800 shadow-md border border-slate-100 dark:border-slate-700 hover:border-teal-500 dark:hover:border-teal-500 transition-all">
-            <CheckSquare className="text-teal-500 mb-2" size={24} />
+            <ListChecks className="text-teal-500 mb-2" size={24} />
             <span className="text-[11px] font-bold text-slate-700 dark:text-slate-200">تدقيق يومي</span>
           </button>
 
           <button onClick={() => setShowCalculator(true)} className="flex flex-col items-center justify-center p-3 rounded-xl bg-white dark:bg-slate-800 shadow-md border border-slate-100 dark:border-slate-700 hover:border-blue-500 dark:hover:border-blue-500 transition-all">
-            <Calculator className="text-blue-500 mb-2" size={24} />
+            <FlaskConical className="text-blue-500 mb-2" size={24} />
             <span className="text-[11px] font-bold text-slate-700 dark:text-slate-200">حاسبة الكلور</span>
           </button>
           
           <button onClick={() => setShowPepModal(true)} className="flex flex-col items-center justify-center p-3 rounded-xl bg-rose-50 dark:bg-rose-950/30 shadow-md border border-rose-200 dark:border-rose-900 hover:border-rose-500 dark:hover:border-rose-500 transition-all group">
-            <Syringe className="text-rose-500 mb-2 group-hover:scale-110 transition-transform" size={24} />
+            <Activity className="text-rose-500 mb-2 group-hover:scale-110 transition-transform" size={24} />
             <span className="text-[11px] font-bold text-rose-700 dark:text-rose-400">طوارئ وخز</span>
           </button>
         </div>

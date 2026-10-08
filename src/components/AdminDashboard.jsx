@@ -132,6 +132,9 @@ export default function AdminDashboard({ onClose }) {
                 <h3 className="font-bold text-slate-800 dark:text-white flex items-center gap-2">
                   <Users size={20} className="text-indigo-500" />
                   سجل الأطباء المسجلين مؤخراً
+                  <span className="bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 py-0.5 px-2 rounded-full text-xs font-bold mr-2">
+                    (الإجمالي: {users.length})
+                  </span>
                 </h3>
               </div>
               <div className="overflow-x-auto">
