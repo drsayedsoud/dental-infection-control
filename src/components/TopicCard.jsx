@@ -113,14 +113,14 @@ export default function TopicCard({ topic, index, isExpanded, onToggle, onQuizCo
                     let btnClass = "w-full text-right p-3 rounded-lg border text-sm transition-all duration-200 ";
                     
                     if (!showResult) {
-                      btnClass += "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-600 hover:border-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/20";
+                      btnClass += "bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-600 hover:border-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/20";
                     } else {
                       if (isCorrectOption) {
                         btnClass += "bg-green-50 dark:bg-green-900/20 border-green-500 text-green-700 dark:text-green-300 font-bold";
                       } else if (isSelected && !isCorrectOption) {
                         btnClass += "bg-rose-50 dark:bg-rose-900/20 border-rose-500 text-rose-700 dark:text-rose-300";
                       } else {
-                        btnClass += "bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 opacity-50";
+                        btnClass += "bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 opacity-50";
                       }
                     }
 
