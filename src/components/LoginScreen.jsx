@@ -15,13 +15,14 @@ export default function LoginScreen({ onLoginSuccess }) {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
       
-      // حفظ بيانات المستخدم في قاعدة البيانات لتتمكن من معرفة من سجل الدخول
+      // حفظ بيانات المستخدم في مجموعة منفصلة خاصة بهذا التطبيق فقط لتجنب الاختلاط مع التطبيقات الأخرى
       try {
-        await setDoc(doc(db, "users", user.uid), {
+        await setDoc(doc(db, "infection_users", user.uid), {
           name: user.displayName,
           email: user.email,
           photoURL: user.photoURL,
-          lastLogin: serverTimestamp()
+          lastLogin: serverTimestamp(),
+          appSource: "infection_control_app"
         }, { merge: true });
       } catch (dbError) {
         console.error("Error saving user to Firestore:", dbError);
