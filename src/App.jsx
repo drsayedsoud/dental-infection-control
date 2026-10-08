@@ -4,11 +4,12 @@ import FlashcardsMode from './components/FlashcardsMode';
 import DailyChecklist from './components/DailyChecklist';
 import PepEmergencyModal from './components/PepEmergencyModal';
 import LoginScreen from './components/LoginScreen';
+import ChlorineCalculator from './components/ChlorineCalculator';
 import { topics } from './data';
 import { 
   ShieldAlert, Activity, Moon, Sun, 
   Search, Trophy, HeartPulse, CheckSquare,
-  Droplets, Syringe, Sparkles, X, LogOut
+  Droplets, Syringe, Sparkles, X, LogOut, Calculator
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { auth, signOut } from './firebase';
@@ -27,6 +28,7 @@ function App() {
   const [showFlashcards, setShowFlashcards] = useState(false);
   const [showChecklist, setShowChecklist] = useState(false);
   const [showPepModal, setShowPepModal] = useState(false);
+  const [showCalculator, setShowCalculator] = useState(false);
   
   const [user, setUser] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
@@ -221,20 +223,25 @@ function App() {
       <main className="container mx-auto max-w-4xl px-4 py-6 -mt-4 relative z-20">
         
         {/* Quick Actions */}
-        <div className="grid grid-cols-3 gap-3 mb-6">
+        <div className="grid grid-cols-4 gap-2 mb-6">
           <button onClick={() => setShowFlashcards(true)} className="flex flex-col items-center justify-center p-3 rounded-xl bg-white dark:bg-slate-800 shadow-md border border-slate-100 dark:border-slate-700 hover:border-teal-500 dark:hover:border-teal-500 transition-all">
             <Sparkles className="text-amber-500 mb-2" size={24} />
-            <span className="text-xs font-bold text-slate-700 dark:text-slate-200">فلاش كارد</span>
+            <span className="text-[11px] font-bold text-slate-700 dark:text-slate-200">فلاش كارد</span>
           </button>
           
           <button onClick={() => setShowChecklist(true)} className="flex flex-col items-center justify-center p-3 rounded-xl bg-white dark:bg-slate-800 shadow-md border border-slate-100 dark:border-slate-700 hover:border-teal-500 dark:hover:border-teal-500 transition-all">
             <CheckSquare className="text-teal-500 mb-2" size={24} />
-            <span className="text-xs font-bold text-slate-700 dark:text-slate-200">تدقيق يومي</span>
+            <span className="text-[11px] font-bold text-slate-700 dark:text-slate-200">تدقيق يومي</span>
+          </button>
+
+          <button onClick={() => setShowCalculator(true)} className="flex flex-col items-center justify-center p-3 rounded-xl bg-white dark:bg-slate-800 shadow-md border border-slate-100 dark:border-slate-700 hover:border-blue-500 dark:hover:border-blue-500 transition-all">
+            <Calculator className="text-blue-500 mb-2" size={24} />
+            <span className="text-[11px] font-bold text-slate-700 dark:text-slate-200">حاسبة الكلور</span>
           </button>
           
           <button onClick={() => setShowPepModal(true)} className="flex flex-col items-center justify-center p-3 rounded-xl bg-rose-50 dark:bg-rose-950/30 shadow-md border border-rose-200 dark:border-rose-900 hover:border-rose-500 dark:hover:border-rose-500 transition-all group">
             <Syringe className="text-rose-500 mb-2 group-hover:scale-110 transition-transform" size={24} />
-            <span className="text-xs font-bold text-rose-700 dark:text-rose-400">طوارئ وخز</span>
+            <span className="text-[11px] font-bold text-rose-700 dark:text-rose-400">طوارئ وخز</span>
           </button>
         </div>
 
@@ -287,6 +294,7 @@ function App() {
       <AnimatePresence>
         {showFlashcards && <FlashcardsMode onClose={() => setShowFlashcards(false)} />}
         {showChecklist && <DailyChecklist onClose={() => setShowChecklist(false)} />}
+        {showCalculator && <ChlorineCalculator onClose={() => setShowCalculator(false)} />}
         {showPepModal && <PepEmergencyModal onClose={() => setShowPepModal(false)} />}
       </AnimatePresence>
 
