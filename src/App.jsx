@@ -152,6 +152,8 @@ function App() {
   const totalQuestions = topics.length;
   const answeredCount = Object.keys(quizResults).length;
   const correctCount = Object.values(quizResults).filter(r => r.isCorrect).length;
+  const progressPercent = totalQuestions > 0 ? Math.round((answeredCount / totalQuestions) * 100) : 0;
+
   const handleLogout = () => {
     signOut(auth).catch(console.error);
   };
