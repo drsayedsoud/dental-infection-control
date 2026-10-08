@@ -11,7 +11,7 @@ import {
   ShieldCheck, Activity, Moon, Sun, 
   Search, Trophy, HeartPulse, ListChecks,
   Droplets, Syringe, Sparkles, X, LogOut, Calculator, Settings,
-  BookOpen, FlaskConical, AlertCircle
+  BookOpen, FlaskConical, AlertCircle, Share2, MessageCircle
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { auth, signOut } from './firebase';
@@ -387,6 +387,36 @@ function App() {
               <p className="text-slate-500 dark:text-slate-400 font-medium">لم نجد نتائج مطابقة لبحثك</p>
             </div>
           )}
+        </div>
+        
+        {/* Footer actions */}
+        <div className="mt-12 flex flex-col items-center justify-center gap-4 border-t border-slate-200 dark:border-slate-700 pt-8 pb-4">
+          <div className="flex gap-4 flex-wrap justify-center">
+            <button 
+              onClick={() => {
+                const text = "حمل تطبيق مكافحة العدوى لطب الأسنان واستفد من الدليل القومي والأدوات التفاعلية مجاناً!";
+                const url = "https://dental-infection-control-xi.vercel.app";
+                window.open(`https://wa.me/?text=${encodeURIComponent(text + '\n' + url)}`, '_blank');
+              }}
+              className="flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-full font-bold shadow-sm transition-colors text-sm"
+            >
+              <Share2 size={16} />
+              مشاركة عبر واتساب
+            </button>
+            <a 
+              href="https://wa.me/201066415005"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-900 dark:bg-slate-700 dark:hover:bg-slate-600 text-white rounded-full font-bold shadow-sm transition-colors text-sm"
+            >
+              <MessageCircle size={16} />
+              راسل المطور
+            </a>
+          </div>
+          <div className="text-center mt-2">
+            <ToothIcon size={24} className="mx-auto text-slate-300 dark:text-slate-600 mb-2" />
+            <p className="text-xs text-slate-500 dark:text-slate-400 font-bold">إعداد وتطوير: د. السيد أبوالسعود</p>
+          </div>
         </div>
       </main>
 
