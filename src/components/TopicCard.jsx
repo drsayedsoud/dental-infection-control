@@ -74,11 +74,7 @@ export default function TopicCard({ topic, index, isExpanded, onToggle, onQuizCo
             className="overflow-hidden border-t border-slate-100 dark:border-slate-700"
           >
             <div className="p-5">
-              {topic.imageUrl && (
-                <div className="mb-6 rounded-xl overflow-hidden border border-slate-100 dark:border-slate-700 shadow-sm">
-                  <img src={topic.imageUrl} alt={topic.title} className="w-full h-auto object-cover max-h-64" />
-                </div>
-              )}
+
               
               <div className="prose prose-slate dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-line mb-8">
                 <TextWithBadge text={topic.content} />
